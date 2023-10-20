@@ -1,5 +1,5 @@
 
-from tkinter import messagebox, filedialog
+from tkinter import Label, messagebox, filedialog
 from typing import Callable
 from model import SokobanModel, Tile, Entity
 from a2_support import *
@@ -43,13 +43,6 @@ class FancyGameView(AbstractGrid):
                         for y in range(0, game_display.height, self.get_cell_size()[1])]
         pass
 
-    def get_image(
-            image_name: str,
-            size: tuple[int, int],
-            cache: dict[str, ImageTk.PhotoImage] = None
-        ) -> ImageTk.PhotoImage:
-        pass
-
 # Clear the game view
 
     def clear(self):
@@ -79,16 +72,17 @@ def entity_positions(
 
 
 # Create a  tile images
-    tile_positions = []
-    tile_positions = [(tile_x, tile_y) for tile_x, tile_y in tile_positions]
 
-    for tile_x, tile_y in tile_positions:
-        tile_image = get_image(tile_x, tile_y, "tile")  # Use the get_image function to create tile images
-        # game_display.render_image(tile_image, tile_x, tile_y)
         
 
-    # def get_tile_position(self.tile_position) -> Positon:
-    #     """ Returns the tile's current position. """
+    def get_tile_position(self,tile_position) -> Positon:
+        """ Returns the tile's current position. """
+        tile_positions = []
+        tile_positions = [(tile_x, tile_y) for tile_x, tile_y in tile_positions]
+
+        for tile_x, tile_y in tile_positions:
+            tile_image = get_image(tile_x, tile_y, "tile")  # Use the get_image function to create tile images
+            # game_display.render_image(tile_image, tile_x, tile_y)
     #     return self._tile_position
 
 
@@ -115,9 +109,6 @@ def entity_positions(
 def __init__ (self, maze: Grid, entities: Entities, player_position: Position):
     pass
 
-def get_image(image_name: str, size: tuple[int, int], cache: dict[str, ImageTk.PhotoImage] = None) -> Image:
-    image = Image.open('Ca3\images\banner.png')
-
 class FancyStatsView(AbstractGrid):
     def __init__(self) -> None:
         pass
@@ -137,19 +128,30 @@ class ExtraFancySokoban:
     def __init__(self, root: tk.Tk, maze_file: str) -> None:
         self._model = SokobanModel(maze_file)
         self._view = FancySokobanView(root, self._model.get_dimensions, (300,500))
+        root.title('Extra Fancy Sokoban')
+        ## add image banner using get_image function inside the root parameter
+        img = get_image('images/banner.png', (923,105))
+        label = tk.Label(root, image = img)
+        label.pack()
+        root.mainloop()
         pass
+    
+    def redraw(self) -> None:
+        pass
+    
+    def handle_keypress(self, event: tk.Event) -> None:
+        pass
+
 
 def play_game(root: tk.Tk, maze_file: str) -> None:
     ExtraFancySokoban(root, maze_file)    
     root.mainloop()
+
 def main() -> None:
     root = tk.Tk()
-    root.title('Extra Fancy Sokoban')
     play_game(root, "maze_files/maze1.txt")
-
     """ The main function. """
-    pass  # Write your main code here
-
+    pass
 
 if __name__ == "__main__":
     main()
