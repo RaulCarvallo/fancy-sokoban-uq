@@ -87,9 +87,10 @@ def entity_positions(
         tile_image = get_image(tile_x, tile_y, "tile")  # Use the get_image function to create tile images
         game_display.render_image(tile_image, tile_x, tile_y)
         
-def get_tile_position(self, tile_position) -> Position:
-    """ Returns the tile's current position. """
-    return self._tile_position
+
+    def get_tile_position(self.tile_position) -> Positon:
+        """ Returns the tile's current position. """
+        return self._tile_position
 
 
 # Create and render entity images
