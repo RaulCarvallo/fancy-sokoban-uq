@@ -66,7 +66,6 @@ def pixel_to_cell(self, x: int, y: int) -> tuple[int, int]:
     return y // cell_height, x // cell_width
 
 
-
 def get_player_position(self) -> Position:
     """ Returns the player's current position. """
     return self._player_position
@@ -85,31 +84,31 @@ def entity_positions(
 
     for tile_x, tile_y in tile_positions:
         tile_image = get_image(tile_x, tile_y, "tile")  # Use the get_image function to create tile images
-        game_display.render_image(tile_image, tile_x, tile_y)
+        # game_display.render_image(tile_image, tile_x, tile_y)
         
 
-    def get_tile_position(self.tile_position) -> Positon:
-        """ Returns the tile's current position. """
-        return self._tile_position
+    # def get_tile_position(self.tile_position) -> Positon:
+    #     """ Returns the tile's current position. """
+    #     return self._tile_position
 
 
 # Create and render entity images
-for entity_x, entity_y in entity_positions:
-    entity_image = get_image(entity_x, entity_y, "entity")  # Use the get_image function to create entity images
-    game_display.render_image(entity_image, entity_x, entity_y)
+# for entity_x, entity_y in entity_positions:
+#     entity_image = get_image(entity_x, entity_y, "entity")  # Use the get_image function to create entity images
+#     game_display.render_image(entity_image, entity_x, entity_y)
 
 # Update the display to show the rendered images
-pygame.display.update()
+# pygame.display.update()
 
 # Game loop, event handling, and other game logic here
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+# running = True
+# while running:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             running = False
 
 # Quit the game and clean up
-pygame.quit()
+# pygame.quit()
 
 
 
@@ -145,6 +144,7 @@ def play_game(root: tk.Tk, maze_file: str) -> None:
     root.mainloop()
 def main() -> None:
     root = tk.Tk()
+    root.title('Extra Fancy Sokoban')
     play_game(root, "maze_files/maze1.txt")
 
     """ The main function. """
