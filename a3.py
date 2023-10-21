@@ -115,12 +115,17 @@ class FancyStatsView(AbstractGrid):
     
     def initial_position(self, x: int, y: int) -> tuple[int, int]:
         pass
+    
+    def draw_stats(self, moves_remaining: int, strength: int, money: int) -> None:
+        pass        
 
 class Shop:
-    def __init__(self) -> None:
-        pass
-    
 
+    def __init__(self, master: tk.Frame) -> None:
+        pass
+    def create_buyable_item( self, item: str, amount: int, callback: Callable[[], None]
+) -> None:
+        pass
     
 class FancySokobanView:
     def __init__(self, master: tk.Tk, dimensions: tuple[int, int], size: tuple[int,
