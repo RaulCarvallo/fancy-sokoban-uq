@@ -121,10 +121,13 @@ def get_image(image_name: str, size: tuple[int, int], cache: dict[str, ImageTk.P
 class FancyStatsView(AbstractGrid):
     def __init__(self) -> None:
         pass
+    def initial_position(self, x: int, y: int) -> tuple[int, int]:
+        pass
 
 class Shop:
     def __init__(self) -> None:
         pass
+    
 
     
 class FancySokobanView:
