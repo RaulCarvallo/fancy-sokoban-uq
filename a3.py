@@ -110,8 +110,9 @@ def __init__ (self, maze: Grid, entities: Entities, player_position: Position):
     pass
 
 class FancyStatsView(AbstractGrid):
-    def __init__(self) -> None:
+    def __init__(self, master: tk.Tk | tk.Frame) -> None:
         pass
+    
     def initial_position(self, x: int, y: int) -> tuple[int, int]:
         pass
 
