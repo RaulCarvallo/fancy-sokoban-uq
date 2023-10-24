@@ -119,10 +119,11 @@ class FancyStatsView(AbstractGrid):
     def draw_stats(self, moves_remaining: int, strength: int, money: int) -> None:
         pass        
 
-class Shop:
+class Shop(tk.Frame):
 
     def __init__(self, master: tk.Frame) -> None:
         pass
+    
     def create_buyable_item( self, item: str, amount: int, callback: Callable[[], None]
 ) -> None:
         pass
@@ -131,15 +132,23 @@ class FancySokobanView:
     def __init__(self, master: tk.Tk, dimensions: tuple[int, int], size: tuple[int,
 int]) -> None:
         pass
-        
-        
+
+    def display_game(self, maze: Grid, entities: Entities, player_position: Position ):
+        pass
+    
+    def display_stats(self, moves: int, strength: int, money: int) -> None:
+        pass
+
+    def create_shop_items( self, shop_items: dict[str, int], button_callback:Callable[[str], None] | None = None ) -> None:
+        pass
+
 class ExtraFancySokoban:
     def __init__(self, root: tk.Tk, maze_file: str) -> None:
         self._model = SokobanModel(maze_file)
         self._view = FancySokobanView(root, self._model.get_dimensions, (300,500))
         root.title('Extra Fancy Sokoban')
         ## add image banner using get_image function inside the root parameter
-        img = get_image('images/banner.png', (923,105))
+        img = get_image('images/banner.png', (650,BANNER_HEIGHT))
         label = tk.Label(root, image = img)
         label.pack()
         root.mainloop()
