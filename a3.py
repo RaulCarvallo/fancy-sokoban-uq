@@ -36,22 +36,32 @@ class FancyGameView(AbstractGrid):
         )
         self._cache = {}
 
+   ##################
+    Entities = dict[Tuple[int, int], Entity]:
+
     def display(self, maze: Grid, entities: Entities, player_position: Position ):
         
         self.clear()
-
+        
         # step 1 = draw the tiles from the maze
         for row_num, row in enumerate(maze):
             for col_num, tile in enumerate(row):
                 position = (row_num, col_num)
                 if str(tile) == " ":
                     image_name = "images/Floor.png"
+                if str(tile) == "W":
+                    image_name = "images/W.png"
+                if str(tile) == "G":
+                    image_name = "images/G.png"
+                if str(tile) == "X":
+                    image_name = "images/X.png"
                 else: 
                     image_name = f"images/{str(tile)}.png"
                 image = get_image(image_name, self.get_cell_size(), self._cache)
                 self.create_image(self.get_midpoint(position), image=image)
 
         # go over the entities and create images for those
+        # one for loop over the dictionary (look into .items method for dictionaries)
 
     
         for entity in entities:
@@ -60,12 +70,13 @@ class FancyGameView(AbstractGrid):
             entity_image = get_image(entity_image_name, self.get_cell_size(), self._cache)
             self.create_image(self.get_midpoint(entity_position), image=entity_image)
             
-        # one for loop over the dictionary (look into .items method for dictionaries)
 
         # draw the player at the player position (not a for loop, just draw the player at player_position)
+        image = get_image(image_name("images/P.png"), self.get_cell_size(), self._cache)
+        self.create_image(self.get_midpoint(player_position), image=i)
 
 
-# Clear the game view
+
 
 
 # Define tile and entity positions
