@@ -27,27 +27,45 @@ from a3_support import *
 class FancyGameView(AbstractGrid):
     images={}
     def __init__(self, master: tk.Frame | tk.Tk, dimensions: tuple[int, int], size:
-    tuple[int, int], **kwargs) -> None:
+        tuple[int, int], **kwargs) -> None:
         super().__init__(
             master,
             dimensions,
             size,
             **kwargs
         )
+        self._cache = {}
 
     def display(self, maze: Grid, entities: Entities, player_position: Position ):
         
-        game_display = FancyGameView()
-        game_display.clear()
-        tile_positions = [(x, y) for x in range(0, game_display.width, self.get_cell_size()[0]) 
-                        for y in range(0, game_display.height, self.get_cell_size()[1])]
-        pass
+        self.clear()
+
+        # step 1 = draw the tiles from the maze
+        for row_num, row in enumerate(maze):
+            for col_num, tile in enumerate(row):
+                position = (row_num, col_num)
+                if str(tile) == " ":
+                    image_name = "images/Floor.png"
+                else: 
+                    image_name = f"images/{str(tile)}.png"
+                image = get_image(image_name, self.get_cell_size(), self._cache)
+                self.create_image(self.get_midpoint(position), image=image)
+
+        # go over the entities and create images for those
+
+    
+        for entity in entities:
+            entity_position = entity.get_position()  # Assuming there's a method to get entity position
+            entity_image_name = entity.get_image_name()  # Assuming there's a method to get entity image name
+            entity_image = get_image(entity_image_name, self.get_cell_size(), self._cache)
+            self.create_image(self.get_midpoint(entity_position), image=entity_image)
+            
+        # one for loop over the dictionary (look into .items method for dictionaries)
+
+        # draw the player at the player position (not a for loop, just draw the player at player_position)
+
 
 # Clear the game view
-
-    def clear(self):
-        """ Clears all child widgets off the canvas. """
-        self.delete("all")
 
 
 # Define tile and entity positions
@@ -75,7 +93,7 @@ def entity_positions(
 
         
 
-    def get_tile_position(self,tile_position) -> Positon:
+    def get_tile_position(self,tile_position) -> Position:
         """ Returns the tile's current position. """
         tile_positions = []
         tile_positions = [(tile_x, tile_y) for tile_x, tile_y in tile_positions]
@@ -131,10 +149,11 @@ class Shop(tk.Frame):
 class FancySokobanView:
     def __init__(self, master: tk.Tk, dimensions: tuple[int, int], size: tuple[int,
 int]) -> None:
-        pass
+        self._game_view = FancyGameView(master, dimensions, size)
+        self._game_view.pack()
 
     def display_game(self, maze: Grid, entities: Entities, player_position: Position ):
-        pass
+        self._game_view.display(maze, entities, player_position)
     
     def display_stats(self, moves: int, strength: int, money: int) -> None:
         pass
@@ -145,17 +164,17 @@ int]) -> None:
 class ExtraFancySokoban:
     def __init__(self, root: tk.Tk, maze_file: str) -> None:
         self._model = SokobanModel(maze_file)
-        self._view = FancySokobanView(root, self._model.get_dimensions, (300,500))
+        self._view = FancySokobanView(root, self._model.get_dimensions(), (MAZE_SIZE, MAZE_SIZE))
         root.title('Extra Fancy Sokoban')
         ## add image banner using get_image function inside the root parameter
-        img = get_image('images/banner.png', (650,BANNER_HEIGHT))
+        img = get_image('images/banner.png', (MAZE_SIZE+SHOP_WIDTH,BANNER_HEIGHT))
         label = tk.Label(root, image = img)
         label.pack()
-        root.mainloop()
+        self.redraw()
         pass
     
     def redraw(self) -> None:
-        pass
+        self._view.display_game(self._model.get_maze(), self._model.get_entities(), self._model.get_player_position())
     
     def handle_keypress(self, event: tk.Event) -> None:
         pass
