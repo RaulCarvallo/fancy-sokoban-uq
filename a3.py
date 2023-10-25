@@ -10,20 +10,6 @@ from a3_support import *
 '''Initialize Pygame'''
 
 
-
-# root = tk.Tk()
-# root.title('Extra Fancy Sokoban')
-# play_game = tk.Label(root, text='Exta Fancy Sokoban')# create a label widget as a child of 'root'
-# play_game.pack()
-
-
-# main_page = tk.Label(frame, text="Main", bg="yellow")
-# main_page.pack(side=tk.RIGHT)
-
-# title_game = tk.Label(frame, text="Title", bg="purple")
-# title_game.pack(side=tk.RIGHT)
-
-
 class FancyGameView(AbstractGrid):
     images={}
     def __init__(self, master: tk.Frame | tk.Tk, dimensions: tuple[int, int], size:
@@ -37,7 +23,7 @@ class FancyGameView(AbstractGrid):
         self._cache = {}
 
    ##################
-    Entities = dict[Tuple[int, int], Entity]:
+    Entities = dict[tuple[int, int], Entity]
 
     def display(self, maze: Grid, entities: Entities, player_position: Position ):
         
@@ -49,11 +35,11 @@ class FancyGameView(AbstractGrid):
                 position = (row_num, col_num)
                 if str(tile) == " ":
                     image_name = "images/Floor.png"
-                if str(tile) == "W":
+                elif str(tile) == "W":
                     image_name = "images/W.png"
-                if str(tile) == "G":
+                elif str(tile) == "G":
                     image_name = "images/G.png"
-                if str(tile) == "X":
+                elif str(tile) == "X":
                     image_name = "images/X.png"
                 else: 
                     image_name = f"images/{str(tile)}.png"
@@ -63,17 +49,18 @@ class FancyGameView(AbstractGrid):
         # go over the entities and create images for those
         # one for loop over the dictionary (look into .items method for dictionaries)
 
-    
-        for entity in entities:
-            entity_position = entity.get_position()  # Assuming there's a method to get entity position
-            entity_image_name = entity.get_image_name()  # Assuming there's a method to get entity image name
-            entity_image = get_image(entity_image_name, self.get_cell_size(), self._cache)
-            self.create_image(self.get_midpoint(entity_position), image=entity_image)
+        print(entities)
+        for position, entity in entities.items():
+            print(position, entity)
+        #     entity_position = entity.get_position()  # Assuming there's a method to get entity position
+        #     entity_image_name = entity.get_image_name()  # Assuming there's a method to get entity image name
+        #     entity_image = get_image(entity_image_name, self.get_cell_size(), self._cache)
+        #     self.create_image(self.get_midpoint(entity_position), image=entity_image)
             
 
         # draw the player at the player position (not a for loop, just draw the player at player_position)
-        image = get_image(image_name("images/P.png"), self.get_cell_size(), self._cache)
-        self.create_image(self.get_midpoint(player_position), image=i)
+        image = get_image("images/P.png", self.get_cell_size(), self._cache)
+        self.create_image(self.get_midpoint(player_position), image=image)
 
 
 
@@ -111,28 +98,6 @@ def entity_positions(
 
         for tile_x, tile_y in tile_positions:
             tile_image = get_image(tile_x, tile_y, "tile")  # Use the get_image function to create tile images
-            # game_display.render_image(tile_image, tile_x, tile_y)
-    #     return self._tile_position
-
-
-# Create and render entity images
-# for entity_x, entity_y in entity_positions:
-#     entity_image = get_image(entity_x, entity_y, "entity")  # Use the get_image function to create entity images
-#     game_display.render_image(entity_image, entity_x, entity_y)
-
-# Update the display to show the rendered images
-# pygame.display.update()
-
-# Game loop, event handling, and other game logic here
-# running = True
-# while running:
-#     for event in pygame.event.get():
-#         if event.type == pygame.QUIT:
-#             running = False
-
-# Quit the game and clean up
-# pygame.quit()
-
 
 
 def __init__ (self, maze: Grid, entities: Entities, player_position: Position):
@@ -140,6 +105,8 @@ def __init__ (self, maze: Grid, entities: Entities, player_position: Position):
 
 class FancyStatsView(AbstractGrid):
     def __init__(self, master: tk.Tk | tk.Frame) -> None:
+        self._game_view = FancyStatsView(master, dimensions, size)
+        self._game_view.pack()
         pass
     
     def initial_position(self, x: int, y: int) -> tuple[int, int]:
@@ -147,6 +114,7 @@ class FancyStatsView(AbstractGrid):
     
     def draw_stats(self, moves_remaining: int, strength: int, money: int) -> None:
         pass        
+    
 
 class Shop(tk.Frame):
 
