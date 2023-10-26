@@ -89,16 +89,24 @@ def entity_positions(
 
 # Create a  tile images
 
-        
+         
+    def get_tile_position(self, tile_positions) -> Position:
+     """ Returns the tile's current position. """
+    
+    # Initialize an empty list to store tile images
+    tile_images = []
+    tile_positions = []
+    tile_positions = [(tile_x, tile_y) for tile_x, tile_y in tile_positions]
 
-    def get_tile_position(self,tile_position) -> Position:
-        """ Returns the tile's current position. """
-        tile_positions = []
-        tile_positions = [(tile_x, tile_y) for tile_x, tile_y in tile_positions]
+    # Iterate through the list of tile positions and fetch images
+    for tile_x, tile_y in tile_positions:
+        # Assuming 'get_image' function is defined and correctly implemented
+        tile_image = get_image(tile_x, tile_y, "tile")
+        tile_images.append(tile_image)
 
-        for tile_x, tile_y in tile_positions:
-            tile_image = get_image(tile_x, tile_y, "tile")  # Use the get_image function to create tile images
+    return tile_images
 
+    
 
 def __init__ (self, maze: Grid, entities: Entities, player_position: Position):
     pass
@@ -113,8 +121,23 @@ class FancyStatsView(AbstractGrid):
         pass
     
     def draw_stats(self, moves_remaining: int, strength: int, money: int) -> None:
-        pass        
-    
+        # Clear the view
+        self.clear()
+        # Add 'Player Stats' in the top row, second column, with bold font
+        self.set_text(0, 1, "Player Stats", font=("bold", FONT))
+        # Add titles for stats in the second row
+        self.set_text(1, 0, "Moves Remaining")
+        self.set_text(1, 1, "Strength")
+        self.set_text(1, 2, "Money")
+        # Add values for stats in the third row
+        self.set_text(2, 0, str(moves_remaining))
+        self.set_text(2, 1, str(strength))
+        self.set_text(2, 2, str(money))
+        label = tk.Label(root, image = img)
+        label.pack()
+        pass
+
+
 
 class Shop(tk.Frame):
 
